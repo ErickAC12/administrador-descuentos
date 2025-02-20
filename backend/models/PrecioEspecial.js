@@ -13,9 +13,8 @@ const precioEspecialSchema = new mongoose.Schema({
     type: String,
     required: true
   }],
-  timestamps: true
-});
+}, { timestamps: true });
 
-const precioEspecial = mongoose.model('PrecioEspecial', precioEspecialSchema);
+const PrecioEspecial = mongoose.model('PrecioEspecial', precioEspecialSchema, 'preciosEspecialesAlvarez81');
 
-export default precioEspecial;
+export default PrecioEspecial;
