@@ -43,6 +43,7 @@ app.get('/api/productos', async (req, res) => {
     res.status(500).send('Error de servidor');
   }
 });
+
 // Todos los precios especiales
 app.get('/api/preciosespeciales/', async (req, res) => {
   try {
@@ -72,5 +73,31 @@ app.post('/api/precioespecial', async (req, res) => {
   } catch (error) {
     console.error(error)
     res.status(500).json({ success: false, message: "Error al guardar la información"})
+  }
+});
+
+//Editar precio especial
+app.put('/api/precioespecial/:id', async (req, res) => {
+  const { id } = req.params;
+
+  const precioEspecial = req.body;
+
+  try {
+    const nuevoPrecioEspecial = await PrecioEspecial.findByIdAndUpdate(id, precioEspecial, {new: true});
+    res.status(200).json({ success: true, obj: nuevoPrecioEspecial });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Datos inválidos" });
+  }
+});
+
+// Borrar precio especial
+app.delete('/api/precioespecial/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    await PrecioEspecial.findByIdAndDelete(id);
+    res.status(200).json({ success: true, message: "Precio especial eliminado" });
+  } catch (error) {
+    res.status(404).json({ success: false, message: "Precio especial no encontrado" });
   }
 });
