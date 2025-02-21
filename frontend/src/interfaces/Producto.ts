@@ -8,7 +8,7 @@ interface Producto {
   currencyPrice?: string;
   brand?: string;
   sku?: string;
-  tags?: [string];
+  tags?: string[];
   createdAt?: string;
   updatedAt?: string;
 }

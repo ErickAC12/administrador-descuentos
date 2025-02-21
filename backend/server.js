@@ -1,7 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
 import PrecioEspecial from './models/PrecioEspecial.js';
 
 dotenv.config();
@@ -47,6 +47,20 @@ app.get('/api/productos', async (req, res) => {
   }
 });
 
+// Un solo producto
+app.get('/api/producto/:id', async (req, res) => {
+  try {
+    const {id} = req.params;
+    const db = await connectToMongoDB();
+    const productosCollection = db.collection('productos');
+    const producto = await productosCollection.findOne({ _id: new ObjectId(id) })
+    res.json(producto);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error de servidor');
+  }
+})
+
 // Todos los precios especiales
 app.get('/api/preciosespeciales/', async (req, res) => {
   try {
@@ -64,7 +78,7 @@ app.get('/api/preciosespeciales/', async (req, res) => {
 app.post('/api/precioespecial', async (req, res) => {
   const precioEspecial = req.body;
 
-  if (!precioEspecial.name || !precioEspecial.price || !precioEspecial.users){
+  if (!precioEspecial.id || !precioEspecial.price || !precioEspecial.user){
     return res.status(400).json({ success: false, message: "Por favor añada todos los campos "})
   }
 
