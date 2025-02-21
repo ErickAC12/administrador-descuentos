@@ -1,0 +1,14 @@
+#tabla-articulos {
+  width: 90%;
+  min-width: max-content;
+  margin: 0 auto;
+  font-size: 1.2rem;
+}
+
+#tabla-articulos > tr {
+  background: lightblue;
+}
+
+tr > td:nth-child(n+2) {
+  text-align: center;
+}

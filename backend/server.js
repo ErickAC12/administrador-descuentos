@@ -11,6 +11,9 @@ const port = 5000;
 
 app.use(express.json());
 
+import cors from 'cors';
+app.use(cors());
+
 // Conexión con MongoDB con mongoose
 mongoose.connect(process.env.MONGO_URI)
   .then(() => {
