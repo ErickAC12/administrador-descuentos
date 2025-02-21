@@ -1,0 +1,3 @@
+#root > div:not(#navbar) {
+  margin-top: 13vh;
+}
