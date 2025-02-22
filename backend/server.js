@@ -3,6 +3,9 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import { MongoClient, ObjectId } from 'mongodb';
 import PrecioEspecial from './models/PrecioEspecial.js';
+import Usuario from './models/Usuario.js';
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
 
 dotenv.config();
 
@@ -118,3 +121,41 @@ app.delete('/api/precioespecial/:id', async (req, res) => {
     res.status(404).json({ success: false, message: "Precio especial no encontrado" });
   }
 });
+
+// Registrar nuevo usuario
+app.post('/api/registrar', async (req, res) => {
+  const { username, password } = req.body;
+
+  try {
+    const passwordHash = await bcrypt.hash(password, 10);
+
+    const nuevoUsuario = new Usuario({
+      username,
+      password: passwordHash
+    })
+
+    const usuarioGuardado = await nuevoUsuario.save();
+
+    jwt.sign({
+      id: usuarioGuardado._id,
+    },
+    'secret123',
+    {
+      expiresIn: '1d',
+    },
+    (err, token) => {
+      if (err) console.log(err);
+      res.cookie('token', token);
+      res.json({
+        message: 'Usuario creado.'
+      })
+    });
+
+    res.json({
+      id: usuarioGuardado._id,
+      username: usuarioGuardado.username
+    })
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+})
