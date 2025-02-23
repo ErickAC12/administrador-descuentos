@@ -122,6 +122,39 @@ app.delete('/api/precioespecial/:id', async (req, res) => {
   }
 });
 
+// Iniciar sesión
+app.post('/api/login', async (req, res) => {
+  const { username, password } = req.body;
+
+  try {
+    const usuarioEncontrado = await Usuario.findOne({ username });
+    if (!usuarioEncontrado) return res.status(400).json({ message: "Usuario no encontrado." });
+
+    const isMatch = await bcrypt.compare(password, usuarioEncontrado.password);
+
+    if (!isMatch) return res.status(400).json({ message: "Contraseña incorrecta." });
+
+    jwt.sign({
+      id: usuarioEncontrado._id,
+    },
+    'secret123',
+    {
+      expiresIn: '1d',
+    },
+    (err, token) => {
+      if (err) console.log(err);
+      res.cookie('token', token);
+    });
+
+    res.json({
+      id: usuarioEncontrado._id,
+      username: usuarioEncontrado.username
+    })
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+})
+
 // Registrar nuevo usuario
 app.post('/api/registrar', async (req, res) => {
   const { username, password } = req.body;
