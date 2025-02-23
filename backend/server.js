@@ -6,6 +6,8 @@ import PrecioEspecial from './models/PrecioEspecial.js';
 import Usuario from './models/Usuario.js';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
+import { TOKEN_SECRET } from './config.js';
+import cookieParser from 'cookie-parser';
 
 dotenv.config();
 
@@ -13,6 +15,7 @@ const app = express();
 const port = 5000;
 
 app.use(express.json());
+app.use(cookieParser());
 
 import cors from 'cors';
 app.use(cors());
@@ -124,10 +127,10 @@ app.delete('/api/precioespecial/:id', async (req, res) => {
 
 // Iniciar sesión
 app.post('/api/login', async (req, res) => {
-  const { username, password } = req.body;
+  const { email, password } = req.body;
 
   try {
-    const usuarioEncontrado = await Usuario.findOne({ username });
+    const usuarioEncontrado = await Usuario.findOne({ email });
     if (!usuarioEncontrado) return res.status(400).json({ message: "Usuario no encontrado." });
 
     const isMatch = await bcrypt.compare(password, usuarioEncontrado.password);
@@ -136,20 +139,21 @@ app.post('/api/login', async (req, res) => {
 
     jwt.sign({
       id: usuarioEncontrado._id,
+      username: usuarioEncontrado.username
     },
-    'secret123',
+    TOKEN_SECRET,
     {
       expiresIn: '1d',
     },
     (err, token) => {
       if (err) console.log(err);
       res.cookie('token', token);
+      res.json({
+        id: usuarioEncontrado._id,
+        username: usuarioEncontrado.username
+      })
     });
 
-    res.json({
-      id: usuarioEncontrado._id,
-      username: usuarioEncontrado.username
-    })
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -157,13 +161,14 @@ app.post('/api/login', async (req, res) => {
 
 // Registrar nuevo usuario
 app.post('/api/registrar', async (req, res) => {
-  const { username, password } = req.body;
+  const { username, email, password } = req.body;
 
   try {
     const passwordHash = await bcrypt.hash(password, 10);
 
     const nuevoUsuario = new Usuario({
       username,
+      email,
       password: passwordHash
     })
 
@@ -171,8 +176,9 @@ app.post('/api/registrar', async (req, res) => {
 
     jwt.sign({
       id: usuarioGuardado._id,
+      username: usuarioGuardado.username
     },
-    'secret123',
+    TOKEN_SECRET,
     {
       expiresIn: '1d',
     },
@@ -199,4 +205,17 @@ app.post('/api/logout', (req, res) => {
     expires: new Date(0)
   });
   return res.sendStatus(200);
+})
+
+// Conseguir información del token
+app.get('/api/tokeninfo', (req, res) => {
+  const { token } = req.cookies;
+
+  if (!token) return;
+
+  jwt.verify(token, TOKEN_SECRET, (err, user) => {
+    if (err) return res.json({ message: err.message });
+
+    res.json({id: user.id, username: user.username});
+  })
 })
