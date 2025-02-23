@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
-import LoginInfo from '../interfaces/LoginInfo'
+import RegistroInfo from '../interfaces/RegistroInfo'
 
-const Login: React.FC = () => {
-  const [formData, setFormData] = useState<LoginInfo>({
+const Registrar: React.FC = () => {
+  const [formData, setFormData] = useState<RegistroInfo>({
+    username: '',
     email: '',
     password: ''
   })
@@ -17,12 +18,12 @@ const Login: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (formData.email == '' || formData.password == '') {
+    if (formData.username == '' || formData.email == '' || formData.password == '') {
       alert('Por favor llene todos los campos.');
       return;
     }
     try {
-      await fetch(`http://localhost:5000/api/login`, {
+      await fetch(`http://localhost:5000/api/registrar`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -32,19 +33,28 @@ const Login: React.FC = () => {
         .then(response => response.json())
         .then(data => {
           if (data.success) {
-            window.location.href = '/'
+            window.location.href = '/';
+          } else {
+            alert('Ya existe un usuario con este email.');
           }
         })
     } catch (err) {
-      alert('Error al iniciar sesión.');
+      alert('Error al crear cuenta.');
       console.error(err);
     }
   }
 
   return (
     <div id='login-page'>
-      <h1>Iniciar sesión</h1>
+      <h1>Registrar</h1>
       <form onSubmit={handleSubmit}>
+        <label htmlFor="username">Usuario:</label>
+        <input type="text"
+               id="username"
+               name="username"
+               value={formData.username}
+               onChange={handleChange}
+               required/>
         <label htmlFor="email">Email:</label>
         <input type="text"
                id="email"
@@ -60,10 +70,10 @@ const Login: React.FC = () => {
                onChange={handleChange}
                required/>
         <input type="submit" value="Enviar" />
-        <p>¿No tienes cuenta? <a href="/registrar">Registrate</a></p>
+        <p>¿Tienes cuenta? <a href="/login">Inicia sesión</a></p>
       </form>
     </div>
   )
 }
 
-export default Login
+export default Registrar

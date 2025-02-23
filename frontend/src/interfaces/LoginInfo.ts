@@ -1,6 +1,6 @@
-interface Login {
+interface LoginInfo {
   email: string,
   password: string
 }
 
-export default Login
+export default LoginInfo

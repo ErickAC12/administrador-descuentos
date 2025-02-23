@@ -162,6 +162,10 @@ app.post('/api/login', async (req, res) => {
 app.post('/api/registrar', async (req, res) => {
   const { username, email, password } = req.body;
 
+  const usuarioExiste = Usuario.findOne({email});
+
+  if (usuarioExiste) return res.json({success: false});
+
   try {
     const passwordHash = await bcrypt.hash(password, 10);
 
@@ -190,8 +194,7 @@ app.post('/api/registrar', async (req, res) => {
     });
 
     res.json({
-      id: usuarioGuardado._id,
-      username: usuarioGuardado.username
+        success: true
     })
   } catch (error) {
     res.status(500).json({ message: error.message });

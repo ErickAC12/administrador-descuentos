@@ -12,8 +12,6 @@ const Articulos: React.FC = () => {
       .catch(err => console.error(err))
   }, []);
 
-  console.log(data);
-
   return (
     <div id="Articulos">
       {data.length > 0 ? (
