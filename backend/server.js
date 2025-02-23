@@ -192,3 +192,11 @@ app.post('/api/registrar', async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 })
+
+// Cerrar sesión
+app.post('/api/logout', (req, res) => {
+  res.cookie('token', '', {
+    expires: new Date(0)
+  });
+  return res.sendStatus(200);
+})
