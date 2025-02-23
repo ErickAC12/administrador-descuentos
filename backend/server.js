@@ -149,8 +149,7 @@ app.post('/api/login', async (req, res) => {
       if (err) console.log(err);
       res.cookie('token', token);
       res.json({
-        id: usuarioEncontrado._id,
-        username: usuarioEncontrado.username
+        success: true
       })
     });
 
