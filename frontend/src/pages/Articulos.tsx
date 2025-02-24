@@ -40,11 +40,11 @@ const Articulos: React.FC = () => {
       {data.length > 0 ? (
         <table id="tabla-articulos">
           <tr>
-            <th>Id</th>
+            <th>ID</th>
             <th>Producto</th>
             <th>Categoría</th>
             <th>Precio</th>
-            <th>Diponibles</th>
+            <th>Disponibles</th>
           </tr>
             {data.map((producto:Producto) =>
               (<tr key={producto._id}>
