@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import LoginInfo from '../interfaces/LoginInfo'
+import '../styles/Login.css'
 
 const Login: React.FC = () => {
   const [formData, setFormData] = useState<LoginInfo>({
@@ -46,21 +47,21 @@ const Login: React.FC = () => {
     <div id='login-page'>
       <h1>Iniciar sesión</h1>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="email">Email:</label>
         <input type="text"
                id="email"
                name="email"
                value={formData.email}
                onChange={handleChange}
+               placeholder="Email"
                required/>
-        <label htmlFor="contraseña">Contraseña:</label> 
         <input type="password"
                id="contraseña"
                name="password"
                value={formData.password}
                onChange={handleChange}
+               placeholder="Contraseña"
                required/>
-        <input type="submit" value="Enviar" />
+        <input type="submit" value="Enviar" id="submit-login"/>
         <p>¿No tienes cuenta? <a href="/registrar">Registrate</a></p>
       </form>
     </div>

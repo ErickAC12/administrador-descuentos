@@ -82,7 +82,7 @@ const Subida: React.FC = () => {
 
   return (
     <div id="Subida">
-      <h2>Subir descuento</h2>
+      <h1>Subir descuento</h1>
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="product_id">ID de producto:  </label>

@@ -1,4 +1,4 @@
-#Subida {
+#login-page {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -13,12 +13,12 @@
   padding-top: 5vh;
 }
 
-#Subida > h1 {
+#login-page > h1 {
   margin-top: 0;
   margin-bottom: 4vh;
 }
 
-#Subida > form {
+#login-page > form {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -26,25 +26,25 @@
   align-items: center;
 }
 
-#Subida > form > div {
-  display: flex;
-  flex-direction: column;
-  width: 410px;
-  margin-bottom: 2vh;
-}
-
-#Subida > form > div > input, #Subida > form > input {
+#login-page > form > input {
   font-size: 1.4rem;
   background-color: #EAF3F3;
   border: 2px solid black;
-  line-height: 2rem;
+  line-height: 2.2rem;
+  margin-bottom: 2vh;
+  min-width: 350px;
+  max-width: 420px;
+  width: 100%;
 }
 
-#submit-subida {
-  margin-top: 2vh;
-  padding: 1%;
-}
-
-#submit-subida:hover {
+#submit-login:hover {
   background-color: lightgray;
+}
+
+#login-page > form > p > a {
+  color: black;
+}
+
+#login-page > form > p > a:visited {
+  color: black;
 }
