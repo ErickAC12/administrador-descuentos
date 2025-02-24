@@ -40,7 +40,7 @@ export async function registrar(req, res) {
 
   const usuarioExiste = Usuario.findOne({email});
 
-  if (usuarioExiste) return res.json({success: false});
+  if (usuarioExiste.email) return res.json({success: false});
 
   try {
     const passwordHash = await bcrypt.hash(password, 10);
