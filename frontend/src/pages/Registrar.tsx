@@ -33,9 +33,27 @@ const Registrar: React.FC = () => {
         credentials: 'include'
       })
         .then(response => response.json())
-        .then(data => {
+        .then(async data => {
           if (data.success) {
-            window.location.href = '/';
+            try {
+              await fetch(`http://localhost:5000/api/login`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({email: formData.email, password: formData.password}),
+              credentials: 'include'
+              })
+                .then(responseLogin => responseLogin.json())
+                .then(dataLogin => {
+                  if (dataLogin.success) {
+                    window.location.href = '/'
+                  }
+                })  
+            } catch (error) {
+              alert("No se pudo iniciar sesión.");
+              console.error(error);
+            }
           } else {
             alert('Ya existe un usuario con este email.');
           }
