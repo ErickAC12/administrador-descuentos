@@ -1,12 +1,34 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './Navbar.css'
+import { useUserContext } from '../context/useUserContext'
 
 const Navbar = () => {
+  const {user, setUser} = useUserContext();
+
+  useEffect(() => {
+      const fetchTokenInfo = async () => {
+        try {
+          const response = await fetch('http://localhost:5000/api/tokeninfo', {
+            credentials: 'include'
+          });
+          if (!response.ok) {
+            throw new Error('Failed to fetch token info');
+          }
+          const data = await response.json();
+          setUser(data);
+        } catch (err) {
+          console.log(err);
+        }
+      };
+      
+      fetchTokenInfo();
+    }, [setUser]);
+
   return (
     <>
       <div id='navbar'>
         <div>
-          <p>Default user</p> 
+          <p>{user?.username ? user.username : ''}</p> 
         </div>
         <div className='secciones'>
           <div>
@@ -17,7 +39,7 @@ const Navbar = () => {
           </div>
         </div>
         <div>
-          <a href="/login">Iniciar sesión</a>
+          <a href={user?.username ? "/logout" : "/login"}>{user?.username ? "Cerrar sesión": "Iniciar sesión"}</a>
         </div>
       </div>
     </>
