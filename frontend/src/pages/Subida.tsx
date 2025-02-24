@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import PrecioEspecial from '../interfaces/PrecioEspecial'
 import './Subida.css'
 import { useUserContext } from '../context/useUserContext'
@@ -6,10 +6,17 @@ import { useUserContext } from '../context/useUserContext'
 const Subida: React.FC = () => {
   const {user} = useUserContext();
   const [formData, setFormData] = useState<PrecioEspecial>({
-    id: '',
+    product_id: '',
     price: 0,
-    user: ''
+    users: user?.id || ''
   })
+
+  useEffect(() => {
+    setFormData((prevData) => ({
+      ...prevData,
+      users: user?.id || prevData.users
+    }))
+  }, [setFormData, user?.id])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -21,29 +28,55 @@ const Subida: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (formData.id == '' || formData.price == 0 || formData.user == '') {
+
+    if (formData.product_id === '' || formData.price === 0) {
       alert("Datos inválidos.");
       return;
     }
-    try {
-      const response = await fetch(`http://localhost:5000/api/producto/${formData.id}`);
-      const data = await response.json();
-  
-      if (data) {
-        const formDataCopy = { ...formData, currencyPrice: formData.currencyPrice?.toUpperCase() }
 
-        await fetch(`http://localhost:5000/api/precioespecial`, {
+    try {
+      const productResponse = await fetch(`http://localhost:5000/api/producto/${formData.product_id}`);
+      if (!productResponse.ok) {
+        throw new Error("ID de producto no existente.");
+      }
+
+      const precioEspecialResponse = await fetch(`http://localhost:5000/api/precioespecial/${formData.product_id}`);
+        console.log(1)
+
+      let result;
+      if (precioEspecialResponse.ok) {
+        result = await fetch(`http://localhost:5000/api/precioespecial/${formData.product_id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(formData)
+        });
+        console.log(2)
+      } else {
+        result = await fetch(`http://localhost:5000/api/precioespecial`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify(formDataCopy)
+          body: JSON.stringify(formData)
         });
-        alert("Precio especial subido.");
+        console.log(formData.users)
+        console.log(3)
       }
-    } catch (err) {
-      console.error(err);
-      alert("ID no existente.");
+
+      if (result?.ok) {
+        alert('Precio especial subido.');
+      } else {
+        alert('Error al subir precio especial.');
+      }
+
+    } catch (error) {
+      if (error instanceof Error) {
+        alert(error.message);
+      } else {
+        console.error('Unexpected error', error);
+      }
     }
   }
 
@@ -51,11 +84,11 @@ const Subida: React.FC = () => {
     <div id="Subida">
       <h2>Formulario subida</h2>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="id">ID:  </label>
+        <label htmlFor="product_id">ID de producto:  </label>
         <input type="text"
-               id="id"
-               name="id"
-               value={formData.id}
+               id="product_id"
+               name="product_id"
+               value={formData.product_id}
                onChange={handleChange}
                required/>
         <br /><br />
@@ -67,20 +100,12 @@ const Subida: React.FC = () => {
                onChange={handleChange}
                required/>
         <br /><br />
-        <label htmlFor="tipoMoneda">Tipo de Moneda (predeterminado USD):  </label>
-        <input type="text"
-               id="tipoMoneda"
-               name="currencyPrice"
-               value={formData.currencyPrice?.toUpperCase()}
-               onChange={handleChange}/>
-        <br /><br />
         <label htmlFor="usuario">ID de usuario:  </label>
         <input type="text"
                id="usuario"
-               name="user"
-               value={user?.id ? user.id : formData.user}
-               onChange={handleChange}
-               required/>
+               name="users"
+               defaultValue={user?.id}
+               onChange={handleChange}/>
         <br /><br />
         <input type="submit" value="Enviar" />
       </form>

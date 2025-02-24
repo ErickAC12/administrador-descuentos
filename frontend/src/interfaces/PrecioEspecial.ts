@@ -1,8 +1,7 @@
 interface PrecioEspecial {
-  id: string,
+  product_id: string,
   price: number,
-  currencyPrice?: string,
-  user: string,
+  users?: string,
   createdAt?: string,
   updatedAt?: string
 }

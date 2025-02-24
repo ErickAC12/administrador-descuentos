@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const precioEspecialSchema = new mongoose.Schema({
-  id: {
+  product_id: {
     type: String,
     required: true
   },
@@ -9,12 +9,8 @@ const precioEspecialSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
-  currencyPrice: {
-    type: String,
-    required: false
-  },
-  user: {
-    type: String,
+  users: {
+    type: [String],
     required: true
   },
 }, { timestamps: true });

@@ -88,11 +88,11 @@ app.get('/api/preciosespeciales/', async (req, res) => {
 app.post('/api/precioespecial', async (req, res) => {
   const precioEspecial = req.body;
 
-  if (!precioEspecial.id || !precioEspecial.price || !precioEspecial.user){
+  if (!precioEspecial.product_id || !precioEspecial.price || !precioEspecial.users){
     return res.status(400).json({ success: false, message: "Por favor añada todos los campos "})
   }
 
-  const nuevoPrecioEspecial = new PrecioEspecial(precioEspecial);
+  const nuevoPrecioEspecial = new PrecioEspecial({...precioEspecial, users: [precioEspecial.users]});
 
   try {
     await nuevoPrecioEspecial.save();
@@ -103,14 +103,39 @@ app.post('/api/precioespecial', async (req, res) => {
   }
 });
 
+// Un solo precio especial
+app.get('/api/precioespecial/:productid', async (req, res) => {
+  try {
+    const {productid} = req.params;
+
+    const precioEspecial = await PrecioEspecial.findOne({product_id: productid});
+
+    if (!precioEspecial) return res.status(404).json({ message: 'Precio especial no encontrado'});
+
+    res.status(200).json(precioEspecial);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error de servidor');
+  }
+})
+
 //Editar precio especial
 app.put('/api/precioespecial/:id', async (req, res) => {
   const { id } = req.params;
-
-  const precioEspecial = req.body;
+  const { price, users } = req.body;
+  const updateFields = {price: price};
 
   try {
-    const nuevoPrecioEspecial = await PrecioEspecial.findByIdAndUpdate(id, precioEspecial, {new: true});
+    const existentePrecioEspecial = await PrecioEspecial.findOne({product_id: id});
+
+    if (users && users.trim() !== '' && !existentePrecioEspecial.users.includes(users)) {
+      updateFields.users = [...existentePrecioEspecial.users, users];
+    }
+
+    const nuevoPrecioEspecial = await PrecioEspecial.findOneAndUpdate({product_id: id}, {
+      $set: updateFields
+    }, { new: true });
+
     res.status(200).json({ success: true, obj: nuevoPrecioEspecial });
   } catch (error) {
     res.status(500).json({ success: false, message: "Datos inválidos" });
