@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import PrecioEspecial from '../interfaces/PrecioEspecial'
-import './Subida.css'
+import '../styles/Subida.css'
 import { useUserContext } from '../context/useUserContext'
 
 const Subida: React.FC = () => {

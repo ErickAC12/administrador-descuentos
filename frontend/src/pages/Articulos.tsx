@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Producto from '../interfaces/Producto';
-import './Articulos.css'
+import '../styles/Articulos.css'
 import { useUserContext } from '../context/useUserContext';
 
 const Articulos: React.FC = () => {

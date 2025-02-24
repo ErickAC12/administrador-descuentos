@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import './Navbar.css'
+import '../styles/Navbar.css'
 import { useUserContext } from '../context/useUserContext'
 
 const Navbar = () => {
