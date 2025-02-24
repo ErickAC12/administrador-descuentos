@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import PrecioEspecial from '../interfaces/PrecioEspecial'
 import './Subida.css'
+import { useUserContext } from '../context/useUserContext'
 
 const Subida: React.FC = () => {
+  const {user} = useUserContext();
   const [formData, setFormData] = useState<PrecioEspecial>({
     id: '',
     price: 0,
@@ -72,11 +74,11 @@ const Subida: React.FC = () => {
                value={formData.currencyPrice?.toUpperCase()}
                onChange={handleChange}/>
         <br /><br />
-        <label htmlFor="usuario">Usuario:  </label>
+        <label htmlFor="usuario">ID de usuario:  </label>
         <input type="text"
                id="usuario"
                name="user"
-               value={formData.user}
+               value={user?.id ? user.id : formData.user}
                onChange={handleChange}
                required/>
         <br /><br />

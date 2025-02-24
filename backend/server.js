@@ -210,7 +210,7 @@ app.post('/api/logout', (req, res) => {
   res.cookie('token', '', {
     expires: new Date(0)
   });
-  return res.sendStatus(200).json({success: true});
+  return res.json({success: true});
 })
 
 // Conseguir información del token
@@ -222,7 +222,6 @@ app.get('/api/tokeninfo', (req, res) => {
   jwt.verify(token, TOKEN_SECRET, (err, user) => {
     if (err) return res.json({ message: err.message });
 
-    console.log({id: user.id, username: user.username})
     res.json({id: user.id, username: user.username});
   })
 })
