@@ -103,7 +103,7 @@ app.post('/api/precioespecial', async (req, res) => {
   }
 });
 
-// Un solo precio especial
+// Un solo precio especial con product_id
 app.get('/api/precioespecial/:productid', async (req, res) => {
   try {
     const {productid} = req.params;

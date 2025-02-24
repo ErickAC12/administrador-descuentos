@@ -1,16 +1,37 @@
 import React, { useEffect, useState } from 'react'
 import Producto from '../interfaces/Producto';
 import './Articulos.css'
+import { useUserContext } from '../context/useUserContext';
 
 const Articulos: React.FC = () => {
   const [data, setData] = useState<Producto[]>([]);
+  const {user} = useUserContext();
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/productos')
-      .then(response => response.json())
-      .then(data => setData(data))
-      .catch(err => console.error(err))
-  }, []);
+    const fetchProductos = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/api/productos');
+        const productos = await response.json();
+
+        const updatedProductos = await Promise.all(productos.map(async (producto: Producto) => {
+          const precioEspecialResponse = await fetch(`http://localhost:5000/api/precioespecial/${producto._id}`);
+          if (precioEspecialResponse.ok) {
+            const precioEspecial = await precioEspecialResponse.json();
+            if (precioEspecial.users.includes(user?.id)) {
+              producto.price = precioEspecial.price;
+            }
+          }
+          return producto;
+        }));
+
+        setData(updatedProductos);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    fetchProductos();
+  }, [user?.id]);
 
   return (
     <div id="Articulos">
@@ -23,14 +44,14 @@ const Articulos: React.FC = () => {
             <th>Precio</th>
             <th>Diponibles</th>
           </tr>
-            {data.map((producto:Producto) => (
-                <tr key={producto._id}>
-                  <td>{producto._id}</td>
-                  <td>{producto.name}</td>
-                  <td>{producto.category}</td>
-                  <td>${producto.price}</td>
-                  <td>{producto.stock}</td>
-                </tr>
+            {data.map((producto:Producto) =>
+              (<tr key={producto._id}>
+                <td>{producto._id}</td>
+                <td>{producto.name}</td>
+                <td>{producto.category}</td>
+                <td>${producto.price}</td>
+                <td>{producto.stock}</td>
+              </tr>
             ))}
         </table>
       ): (
