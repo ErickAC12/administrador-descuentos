@@ -4,8 +4,45 @@
   align-items: center;
   flex-direction: column;
   font-size: 1.4rem;
+  background-color: #E0D0C1;
+  color: black;
+  margin: 0 auto;
+  width: 35vw;
+  min-width: min-content;
+  padding: 8vh 2vw;
+  padding-top: 5vh;
+}
+
+#Subida > h2 {
+  margin-top: 0;
+  margin-bottom: 4vh;
+}
+
+#Subida > form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#Subida > form > div {
+  display: flex;
+  flex-direction: column;
+  width: 410px;
+  margin-bottom: 2vh;
 }
 
 input {
   font-size: 1.4rem;
+  background-color: #EAF3F3;
+  border: 2px solid black;
+}
+
+#submit-subida {
+  margin-top: 2vh;
+}
+
+#submit-subida:hover {
+  background-color: lightgray;
 }

@@ -82,32 +82,35 @@ const Subida: React.FC = () => {
 
   return (
     <div id="Subida">
-      <h2>Formulario subida</h2>
+      <h2>Subir descuento</h2>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="product_id">ID de producto:  </label>
-        <input type="text"
-               id="product_id"
-               name="product_id"
-               value={formData.product_id}
-               onChange={handleChange}
-               required/>
-        <br /><br />
-        <label htmlFor="nuevoPrecio">Nuevo Precio:  </label>
-        <input type="number"
-               id="nuevoPrecio"
-               name="price"
-               value={formData.price}
-               onChange={handleChange}
-               required/>
-        <br /><br />
-        <label htmlFor="usuario">ID de usuario:  </label>
-        <input type="text"
-               id="usuario"
-               name="users"
-               defaultValue={user?.id}
-               onChange={handleChange}/>
-        <br /><br />
-        <input type="submit" value="Enviar" />
+        <div>
+          <label htmlFor="product_id">ID de producto:  </label>
+          <input type="text"
+                 id="product_id"
+                 name="product_id"
+                 value={formData.product_id}
+                 onChange={handleChange}
+                 required/>
+        </div>
+        <div>
+          <label htmlFor="nuevoPrecio">Nuevo Precio:  </label>
+          <input type="number"
+                 id="nuevoPrecio"
+                 name="price"
+                 value={formData.price}
+                 onChange={handleChange}
+                 required/>
+        </div>
+        <div>
+          <label htmlFor="usuario">ID de usuario:  </label>
+          <input type="text"
+                 id="usuario"
+                 name="users"
+                 defaultValue={user?.id}
+                 onChange={handleChange}/>
+        </div>
+        <input type="submit" value="Enviar" id="submit-subida"/>
       </form>
     </div>
   )
