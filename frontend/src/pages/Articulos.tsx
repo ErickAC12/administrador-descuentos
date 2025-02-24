@@ -23,20 +23,12 @@ const Articulos: React.FC = () => {
             <th>Precio</th>
             <th>Diponibles</th>
           </tr>
-            {data.map((producto:Producto) => producto.currencyPrice ? (
+            {data.map((producto:Producto) => (
                 <tr key={producto._id}>
                   <td>{producto._id}</td>
                   <td>{producto.name}</td>
                   <td>{producto.category}</td>
-                  <td>${producto.price} {producto.currencyPrice}</td>
-                  <td>{producto.stock}</td>
-                </tr>
-            ) :(
-                <tr key={producto._id}>
-                  <td>{producto._id}</td>
-                  <td>{producto.name}</td>
-                  <td>{producto.category}</td>
-                  <td>${producto.price} USD</td>
+                  <td>${producto.price}</td>
                   <td>{producto.stock}</td>
                 </tr>
             ))}
