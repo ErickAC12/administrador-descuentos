@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import RegistroInfo from '../interfaces/RegistroInfo'
+import '../styles/Registrar.css'
 
 const Registrar: React.FC = () => {
   const [formData, setFormData] = useState<RegistroInfo>({
@@ -45,31 +46,31 @@ const Registrar: React.FC = () => {
   }
 
   return (
-    <div id='login-page'>
+    <div id='registrar-page'>
       <h1>Registrar</h1>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="username">Usuario:</label>
         <input type="text"
                id="username"
                name="username"
                value={formData.username}
                onChange={handleChange}
+               placeholder="Usuario"
                required/>
-        <label htmlFor="email">Email:</label>
         <input type="text"
                id="email"
                name="email"
                value={formData.email}
                onChange={handleChange}
+               placeholder="Email"
                required/>
-        <label htmlFor="contraseña">Contraseña:</label> 
         <input type="password"
                id="contraseña"
                name="password"
                value={formData.password}
                onChange={handleChange}
+               placeholder="Contraseña"
                required/>
-        <input type="submit" value="Enviar" />
+        <input type="submit" value="Enviar" id="submit-registrar"/>
         <p>¿Tienes cuenta? <a href="/login">Inicia sesión</a></p>
       </form>
     </div>

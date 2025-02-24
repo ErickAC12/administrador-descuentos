@@ -1,0 +1,50 @@
+#registrar-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-size: 1.4rem;
+  background-color: #E0D0C1;
+  color: black;
+  margin: 0 auto;
+  width: 35vw;
+  min-width: min-content;
+  padding: 8vh 2vw;
+  padding-top: 5vh;
+}
+
+#registrar-page > h1 {
+  margin-top: 0;
+  margin-bottom: 4vh;
+}
+
+#registrar-page > form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#registrar-page > form > input {
+  font-size: 1.4rem;
+  background-color: #EAF3F3;
+  border: 2px solid black;
+  line-height: 2.2rem;
+  margin-bottom: 2vh;
+  min-width: 350px;
+  max-width: 420px;
+  width: 100%;
+}
+
+#submit-registrar:hover {
+  background-color: lightgray;
+}
+
+#registrar-page > form > p > a {
+  color: black;
+}
+
+#registrar-page > form > p > a:visited {
+  color: black;
+}
