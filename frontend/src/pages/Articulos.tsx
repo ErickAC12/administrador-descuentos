@@ -39,7 +39,7 @@ const Articulos: React.FC = () => {
     <div id="Articulos">
       {data.length > 0 ? (
         <table id="tabla-articulos">
-          <tr>
+          <tr id="tabla-headings">
             <th>ID</th>
             <th>Producto</th>
             <th>Categoría</th>
@@ -57,7 +57,7 @@ const Articulos: React.FC = () => {
             ))}
         </table>
       ): (
-        <p>Cargando...</p>
+        <p id='cargando'>Cargando...</p>
       )}
     </div>
   )

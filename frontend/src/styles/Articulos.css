@@ -4,12 +4,21 @@
   margin: 0 auto;
   font-size: 1.2rem;
   line-height: 2.5rem;
+  color: black;
+}
+
+#tabla-articulos > #tabla-headings {
+  background-color: #E8AE41;
 }
 
 #tabla-articulos > tr {
-  background: lightblue;
+  background-color: #F1C169;
 }
 
 tr > td:nth-child(n+2) {
   text-align: center;
+}
+
+#cargando {
+  color: white;
 }
