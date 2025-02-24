@@ -12,26 +12,28 @@ const Articulos: React.FC = () => {
       try {
         const response = await fetch('http://localhost:5000/api/productos');
         const productos = await response.json();
-
-        const updatedProductos = await Promise.all(productos.map(async (producto: Producto) => {
-          const precioEspecialResponse = await fetch(`http://localhost:5000/api/precioespecial/${producto._id}`);
-          if (precioEspecialResponse.ok) {
-            const precioEspecial = await precioEspecialResponse.json();
-            if (precioEspecial.users.includes(user?.id)) {
-              producto.price = precioEspecial.price;
+        if (user?.id){
+          const updatedProductos = await Promise.all(productos.map(async (producto: Producto) => {
+            const precioEspecialResponse = await fetch(`http://localhost:5000/api/precioespecial/${producto._id}`);
+            if (precioEspecialResponse.ok) {
+              const precioEspecial = await precioEspecialResponse.json();
+              if (precioEspecial.users.includes(user?.id)) {
+                producto.price = precioEspecial.price;
+              }
             }
-          }
-          return producto;
-        }));
-
-        setData(updatedProductos);
+            return producto;
+          }));
+          setData(updatedProductos);
+        } else {
+          setData(productos);
+        }
       } catch (err) {
         console.error(err);
       }
     }
 
     fetchProductos();
-  }, [user?.id]);
+  }, [user?.id])
 
   return (
     <div id="Articulos">
