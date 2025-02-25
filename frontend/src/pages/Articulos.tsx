@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Producto from '../interfaces/Producto';
 import '../styles/Articulos.css'
 import { useUserContext } from '../context/useUserContext';
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const Articulos: React.FC = () => {
   const [data, setData] = useState<Producto[]>([]);
@@ -10,11 +11,11 @@ const Articulos: React.FC = () => {
   useEffect(() => {
     const fetchProductos = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/productos');
+        const response = await fetch(`${apiUrl}/api/productos`);
         const productos = await response.json();
         if (user?.id){
           const updatedProductos = await Promise.all(productos.map(async (producto: Producto) => {
-            const precioEspecialResponse = await fetch(`http://localhost:5000/api/precioespecial/${producto._id}`);
+            const precioEspecialResponse = await fetch(`${apiUrl}/api/precioespecial/${producto._id}`);
             if (precioEspecialResponse.ok) {
               const precioEspecial = await precioEspecialResponse.json();
               if (precioEspecial.users.includes(user?.id)) {

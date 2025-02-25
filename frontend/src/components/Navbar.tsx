@@ -1,14 +1,15 @@
 import React, { useEffect } from 'react'
 import '../styles/Navbar.css'
 import { useUserContext } from '../context/useUserContext'
+const apiUrl = import.meta.env.VITE_API_URL;
 
-const Navbar = () => {
+const Navbar: React.FC = () => {
   const {user, setUser} = useUserContext();
 
   useEffect(() => {
       const fetchTokenInfo = async () => {
         try {
-          const response = await fetch('http://localhost:5000/api/tokeninfo', {
+          const response = await fetch(`${apiUrl}/api/tokeninfo`, {
             credentials: 'include'
           });
           if (!response.ok) {

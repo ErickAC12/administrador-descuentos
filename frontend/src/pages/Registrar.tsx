@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import RegistroInfo from '../interfaces/RegistroInfo'
 import '../styles/Registrar.css'
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const Registrar: React.FC = () => {
   const [formData, setFormData] = useState<RegistroInfo>({
@@ -24,7 +25,7 @@ const Registrar: React.FC = () => {
       return;
     }
     try {
-      await fetch(`http://localhost:5000/api/registrar`, {
+      await fetch(`${apiUrl}/api/registrar`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -36,7 +37,7 @@ const Registrar: React.FC = () => {
         .then(async data => {
           if (data.success) {
             try {
-              await fetch(`http://localhost:5000/api/login`, {
+              await fetch(`${apiUrl}/api/login`, {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json'

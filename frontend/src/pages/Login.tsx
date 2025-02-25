@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import LoginInfo from '../interfaces/LoginInfo'
 import '../styles/Login.css'
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const Login: React.FC = () => {
   const [formData, setFormData] = useState<LoginInfo>({
@@ -23,7 +24,7 @@ const Login: React.FC = () => {
       return;
     }
     try {
-      await fetch(`http://localhost:5000/api/login`, {
+      await fetch(`${apiUrl}/api/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

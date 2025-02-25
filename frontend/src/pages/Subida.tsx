@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import PrecioEspecial from '../interfaces/PrecioEspecial'
 import '../styles/Subida.css'
 import { useUserContext } from '../context/useUserContext'
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const Subida: React.FC = () => {
   const {user} = useUserContext();
@@ -35,17 +36,17 @@ const Subida: React.FC = () => {
     }
 
     try {
-      const productResponse = await fetch(`http://localhost:5000/api/producto/${formData.product_id}`);
+      const productResponse = await fetch(`${apiUrl}/api/producto/${formData.product_id}`);
       if (!productResponse.ok) {
         throw new Error("ID de producto no existente.");
       }
 
-      const precioEspecialResponse = await fetch(`http://localhost:5000/api/precioespecial/${formData.product_id}`);
+      const precioEspecialResponse = await fetch(`${apiUrl}/api/precioespecial/${formData.product_id}`);
         console.log(1)
 
       let result;
       if (precioEspecialResponse.ok) {
-        result = await fetch(`http://localhost:5000/api/precioespecial/${formData.product_id}`, {
+        result = await fetch(`${apiUrl}/api/precioespecial/${formData.product_id}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json'
@@ -54,7 +55,7 @@ const Subida: React.FC = () => {
         });
         console.log(2)
       } else {
-        result = await fetch(`http://localhost:5000/api/precioespecial`, {
+        result = await fetch(`${apiUrl}/api/precioespecial`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { useUserContext } from '../context/useUserContext'
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const Logout: React.FC = () => {
   const {setUser} = useUserContext();
@@ -8,7 +9,7 @@ const Logout: React.FC = () => {
   useEffect(() => {
     const performLogout = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/api/logout`, {
+        const response = await fetch(`${apiUrl}/api/logout`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
