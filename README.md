@@ -3,21 +3,21 @@ Página para modificar precios aplicando descuentos a productos seleccionados se
 
 # Como ejecutar e instalar
 Crear un archivo ```.env``` en la carpeta de ```backend``` con este formato:
-```http
+```bash
 "MONGO_URI=<link>/tienda"
 ```
 
 Cambiar ```backend/server.js``` en la linea 18 con:
-```http
+```bash
   origin: "http://localhost:5173",
 ```
 Y la linea 24 con:
-```http
+```bash
   res.setHeader('Access-Control-Allow-Origin', "http://localhost:5173");
 ```
 
 En la carpeta frontend añadir un ```.env``` con esta variable:
-```http
+```bash
 VITE_API_URL=http://localhost:5000
 ```
 
