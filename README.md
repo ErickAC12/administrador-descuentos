@@ -2,10 +2,25 @@
 Página para modificar precios aplicando descuentos a productos seleccionados según los usuarios elegidos por el administrador. La identificación del usuario se utiliza para determinar a quiénes se les aplicará el descuento. El producto también cuenta con un identificador para saber a qué se le aplicará el descuento. Es posible iniciar sesión con un usuario y mantener la sesión abierta gracias a una cookie.
 
 # Como ejecutar e instalar
-Crear un archivo .env en la carpeta de backend con este formato:
-```http
-"MONGO_URI=<link>/tienda"
+Crear un archivo ```.env``` en la carpeta de ```backend``` con este formato:
+```bash
+MONGO_URI=<link>/tienda
 ```
+
+Cambiar ```backend/server.js``` en la linea 18 con:
+```bash
+  origin: "http://localhost:5173",
+```
+Y la linea 24 con:
+```bash
+  res.setHeader('Access-Control-Allow-Origin', "http://localhost:5173");
+```
+
+En la carpeta frontend añadir un ```.env``` con esta variable:
+```bash
+VITE_API_URL=http://localhost:5000
+```
+
 
 Abrir 2 consolas, una en la carpeta frontend y otra en la carpeta backend, en ambas consolas hacer:
 ```bash
@@ -13,6 +28,7 @@ npm i
 npm run dev
 ```
 
+La página cargará en ```http://localhost:5173```.
 # Frontend
 El frontend está hecho con React y Typescript, el uso de Typescript ayuda a que sea más preciso saber los tipos de datos y evitar
 errores que tengan que ver con tipos de datos no compatibles. Facilita también la comprensión de el código al limitar lo que se
