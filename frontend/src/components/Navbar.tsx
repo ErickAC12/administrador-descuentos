@@ -36,7 +36,7 @@ const Navbar: React.FC = () => {
             <a href="/">Artículos</a>
           </div>
           <div>
-            <a href="/subida">Subida</a>
+          {user?.id ? <a href="/subida">Subida</a> : <></>}
           </div>
         </div>
         <div>
