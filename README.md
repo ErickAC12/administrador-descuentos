@@ -2,10 +2,25 @@
 Página para modificar precios aplicando descuentos a productos seleccionados según los usuarios elegidos por el administrador. La identificación del usuario se utiliza para determinar a quiénes se les aplicará el descuento. El producto también cuenta con un identificador para saber a qué se le aplicará el descuento. Es posible iniciar sesión con un usuario y mantener la sesión abierta gracias a una cookie.
 
 # Como ejecutar e instalar
-Crear un archivo .env en la carpeta de backend con este formato:
+Crear un archivo ```.env``` en la carpeta de ```backend``` con este formato:
 ```http
 "MONGO_URI=<link>/tienda"
 ```
+
+Cambiar ```backend/server.js``` en la linea 18 con:
+```http
+  origin: "http://localhost:5173",
+```
+Y la linea 24 con:
+```http
+  res.setHeader('Access-Control-Allow-Origin', "http://localhost:5173");
+```
+
+En la carpeta frontend añadir un ```.env``` con esta variable:
+```http
+VITE_API_URL=http://localhost:5000
+```
+
 
 Abrir 2 consolas, una en la carpeta frontend y otra en la carpeta backend, en ambas consolas hacer:
 ```bash
