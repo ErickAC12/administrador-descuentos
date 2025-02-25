@@ -24,7 +24,12 @@ export async function iniciarSesion(req, res) {
     },
     (err, token) => {
       if (err) console.log(err);
-      res.cookie('token', token);
+      res.cookie('token', token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'None',
+        maxAge: 24 * 60 * 60 * 1000 // 1 dia
+      });
       res.json({
         success: true
       })
@@ -63,7 +68,13 @@ export async function registrar(req, res) {
     },
     (err, token) => {
       if (err) console.log(err);
-      res.cookie('token', token);
+      res.cookie('token', token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'None',
+        maxAge: 24 * 60 * 60 * 1000 // 1 dia
+
+      });
       res.json({
         message: 'Usuario creado.'
       })

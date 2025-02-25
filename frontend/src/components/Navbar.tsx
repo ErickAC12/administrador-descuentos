@@ -35,9 +35,10 @@ const Navbar: React.FC = () => {
           <div>
             <a href="/">Artículos</a>
           </div>
-          <div>
+          {user?.id ? 
+          (<div>
             <a href="/subida">Subida</a>
-          </div>
+          </div>) : null}
         </div>
         <div>
           <a href={user?.username ? "/logout" : "/login"}>{user?.username ? "Cerrar sesión": "Iniciar sesión"}</a>

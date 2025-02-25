@@ -15,13 +15,13 @@ export const app = express();
 import cors from 'cors';
 
 app.use(cors({
-  origin: "https://administrador-descuentos.onrender.com/",
+  origin: "https://administrador-descuentos.onrender.com",
   optionsSuccessStatus: 200,
   credentials: true
 }));
 
 app.options('*', (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', "https://administrador-descuentos.onrender.com/");
+  res.setHeader('Access-Control-Allow-Origin', "https://administrador-descuentos.onrender.com");
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   res.setHeader('Access-Control-Allow-Credentials', 'true');
