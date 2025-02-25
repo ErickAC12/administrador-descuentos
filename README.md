@@ -28,6 +28,7 @@ npm i
 npm run dev
 ```
 
+La página cargará en ```http://localhost:5173```.
 # Frontend
 El frontend está hecho con React y Typescript, el uso de Typescript ayuda a que sea más preciso saber los tipos de datos y evitar
 errores que tengan que ver con tipos de datos no compatibles. Facilita también la comprensión de el código al limitar lo que se
