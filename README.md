@@ -8,7 +8,7 @@ Crear un archivo .env en la carpeta de backend con este formato:
 ```
 
 Abrir 2 consolas, una en la carpeta frontend y otra en la carpeta backend, en ambas consolas hacer:
-```http
+```bash
 npm i
 npm run dev
 ```
