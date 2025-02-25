@@ -5,6 +5,7 @@ Página para modificar precios aplicando descuentos a productos seleccionados se
 Crear un archivo ```.env``` en la carpeta de ```backend``` con este formato:
 ```bash
 MONGO_URI=<link>/tienda
+NODE_ENV=production
 ```
 
 Cambiar ```backend/server.js``` en la linea 18 con:
