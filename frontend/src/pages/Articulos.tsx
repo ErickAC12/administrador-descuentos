@@ -8,6 +8,10 @@ const Articulos: React.FC = () => {
   const [data, setData] = useState<Producto[]>([]);
   const {user} = useUserContext();
 
+  const tieneTodosLosDatos = (producto: Producto) => {
+    return producto._id && producto.name && producto.category && producto.price !== undefined && producto.stock !== undefined;
+  }
+
   useEffect(() => {
     const fetchProductos = async () => {
       try {
@@ -24,9 +28,9 @@ const Articulos: React.FC = () => {
             }
             return producto;
           }));
-          setData(updatedProductos);
+          setData(updatedProductos.filter(tieneTodosLosDatos));
         } else {
-          setData(productos);
+          setData(productos.filter(tieneTodosLosDatos));
         }
       } catch (err) {
         console.error(err);
