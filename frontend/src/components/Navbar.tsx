@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import '../styles/Navbar.css'
 import { useUserContext } from '../context/useUserContext'
+import Cookies from 'js-cookie'
 const apiUrl = import.meta.env.VITE_API_URL;
 
 const Navbar: React.FC = () => {
@@ -10,6 +11,11 @@ const Navbar: React.FC = () => {
       const fetchTokenInfo = async () => {
         try {
           const response = await fetch(`${apiUrl}/api/tokeninfo`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({token: Cookies.get('token')}),
             credentials: 'include'
           });
           if (!response.ok) {

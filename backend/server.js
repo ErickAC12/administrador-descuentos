@@ -63,4 +63,4 @@ app.post('/api/login', iniciarSesion)
 app.post('/api/registrar', registrar)
 
 // Conseguir información del token
-app.get('/api/tokeninfo', infoToken)
+app.post('/api/tokeninfo', infoToken)

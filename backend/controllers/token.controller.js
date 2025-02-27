@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import { TOKEN_SECRET } from "../config.js";
 
 export function infoToken(req, res) {
-  const { token } = req.cookies;
+  const { token } = req.body;
 
   if (!token) return;
 
