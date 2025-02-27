@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import LoginInfo from '../interfaces/LoginInfo'
 import '../styles/Login.css'
+import Cookies from 'js-cookie'
 const apiUrl = import.meta.env.VITE_API_URL;
 
 const Login: React.FC = () => {
@@ -35,7 +36,10 @@ const Login: React.FC = () => {
         .then(response => response.json())
         .then(data => {
           if (data.success) {
+            Cookies.set('token', data.token, {expires: 1})
             window.location.href = '/'
+          } else {
+            alert(data.message);
           }
         })
     } catch (err) {

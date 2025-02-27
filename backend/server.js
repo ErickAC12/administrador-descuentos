@@ -5,7 +5,7 @@ import cookieParser from 'cookie-parser';
 import { todosLosProductos, unProducto } from './controllers/productos.controller.js';
 import connectMongoose from './db/Mongoose.js';
 import { añadirPrecioEspecial, editarPrecioEspecial, eliminarPrecioEspecial, todosLosPreciosEspeciales, unPrecioEspecial } from './controllers/preciosEspeciales.controller.js';
-import { cerrarSesion, iniciarSesion, registrar } from './controllers/cuenta.controller.js';
+import { iniciarSesion, registrar } from './controllers/cuenta.controller.js';
 import { infoToken } from './controllers/token.controller.js';
 
 dotenv.config();
@@ -61,9 +61,6 @@ app.post('/api/login', iniciarSesion)
 
 // Registrar nuevo usuario
 app.post('/api/registrar', registrar)
-
-// Cerrar sesión
-app.post('/api/logout', cerrarSesion)
 
 // Conseguir información del token
 app.get('/api/tokeninfo', infoToken)

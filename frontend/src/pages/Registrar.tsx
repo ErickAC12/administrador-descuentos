@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import RegistroInfo from '../interfaces/RegistroInfo'
 import '../styles/Registrar.css'
+import Cookies from 'js-cookie'
 const apiUrl = import.meta.env.VITE_API_URL;
 
 const Registrar: React.FC = () => {
@@ -48,6 +49,7 @@ const Registrar: React.FC = () => {
                 .then(responseLogin => responseLogin.json())
                 .then(dataLogin => {
                   if (dataLogin.success) {
+                    Cookies.set('token', dataLogin.token, {expires: 1})
                     window.location.href = '/'
                   }
                 })  
